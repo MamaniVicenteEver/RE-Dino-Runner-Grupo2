@@ -6,7 +6,7 @@ from dino_runner.utils.constants import BIRD
 class Bird() :
   X_POS = 880
   Y_POS = 260
-  x_birt = 15
+  x_birt = 25
   def __init__(self) -> None:
        self.image = BIRD[0]
        self.dino_rect = self.image.get_rect()
