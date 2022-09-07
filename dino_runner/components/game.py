@@ -2,6 +2,7 @@ import pygame
 from turtle import Screen
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 from dino_runner.components.dinosaur import Dinosaur
+from dino_runner.components.bird import Bird
 
 from dino_runner.components.obstaculomanager import ObstacleManager
 
@@ -20,6 +21,7 @@ class Game:
 
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.bird_ = Bird()
 
     def run(self):
         self.playing = True
@@ -36,6 +38,7 @@ class Game:
 
     def update(self):
         self.player.run()
+        self.bird_.run()
         self.obstacle_manager.update(self)
 
     def draw(self):
@@ -43,6 +46,7 @@ class Game:
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
+        self.bird_.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
