@@ -1,13 +1,10 @@
-
-
 import pygame
 from dino_runner.components import text_utils
 from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
-from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.components.bird import Bird
 
+from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstaculomanager import ObstacleManager
 
 class Game:
@@ -29,7 +26,6 @@ class Game:
         self.obstacle_manager = ObstacleManager()
         self.player_heart = PlayerHeartManager()
     
-        self.bird_ = Bird()
 
     def run(self):
         self.playing = True
@@ -45,8 +41,8 @@ class Game:
                 self.playing = False
 
     def update(self):
-        self.player.run()
-        self.bird_.run()
+        user_input = pygame.key.get_pressed()#averiguar
+        self.player.update(user_input)#averiguar
         self.obstacle_manager.update(self)
 
     def draw(self):
@@ -54,12 +50,9 @@ class Game:
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
-        self.bird_.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.player_heart.draw(self.screen)
-
         self.score()
-
         pygame.display.update()
         pygame.display.flip()
 
@@ -72,6 +65,7 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
 
     def score(self):#aumentando la velocidad
         self.point += 1
