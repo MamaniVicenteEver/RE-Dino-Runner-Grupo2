@@ -1,11 +1,11 @@
 from dino_runner.components.player_hearts.heart import Heart
 
 class PlayerHeartManager:
-    def __init__(self):
+    def __init__(self) :
         self.heart_count = 5
 
     def reduce_heart_count(self):
-        self.heart_count -= 1
+      self.heart_count -= 1
 
     def draw(self, screen):
         x_position = 10
