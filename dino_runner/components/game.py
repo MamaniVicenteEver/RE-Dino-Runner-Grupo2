@@ -32,6 +32,9 @@ class Game:
         self.player_heart_manager = PlayerHeartManager()
         self.power_up_manager = PowerUpManager()
 
+        pygame.mixer.music.load("MusicFondo.wav")
+        pygame.mixer.music.play(-1)
+
  
     def run(self):
         self.create_comment()

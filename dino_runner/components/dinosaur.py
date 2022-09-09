@@ -31,6 +31,8 @@ class Dinosaur():
 
         self.setup_state_boolean()
 
+
+
     def setup_state_boolean(self):
         self.has_powerup = False 
         self.shield =False 
