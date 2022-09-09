@@ -1,7 +1,6 @@
 import pygame
 import random
 from dino_runner.components.cactus import Cactus
-# from dino_runner.utils.constants import SMALL_CACTUS
 from dino_runner.components.bird import Bird
 
 class ObstacleManager:
@@ -11,7 +10,6 @@ class ObstacleManager:
 
     def update(self,game):
         if len(self.obstacles) ==0:
-            # self.obstacles.append(Cactus(SMALL_CACTUS) )
             self.obstacle_type_list = [Bird(), Cactus()]
             self.obstacles.append(random.choice(self.obstacle_type_list))
 
@@ -27,9 +25,9 @@ class ObstacleManager:
                        start_transition_time = pygame.time.get_ticks()
                        game.player.lives_transition_time = start_transition_time + 1000
                     else:
-                        pygame.time.delay(500)
+                        # pygame.time.delay(500)
                         game.playing = False 
-                        game.death_count += 1# contador para el menu de texto
+                        game.death_count += 1# contador
                         break 
 
     def draw(self, screen):

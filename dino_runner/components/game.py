@@ -3,11 +3,10 @@ import pygame
 from dino_runner.components import text_utils
 from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS , GAME ,CLOUD
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstaculomanager import ObstacleManager
 from dino_runner.components.power_up.power_up_manager import PowerUpManager
-
 
 class Game:
     def __init__(self):
@@ -17,13 +16,15 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
+        
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
+        self.y_pos_nuve = 100
+        self.x_pos_nuve = 0
+
         self.points = 0
-
         self.running = True #texto
-
         self.death_count = 0
 
         self.player = Dinosaur()
@@ -33,7 +34,6 @@ class Game:
 
  
     def run(self):
-        # Game loop: events - update - draw
         self.create_comment()
         self.playing = True
         while self.playing:
@@ -60,6 +60,7 @@ class Game:
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
+        self.draw_nuve()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.player_heart_manager.draw(self.screen)
@@ -78,6 +79,15 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+    
+    def draw_nuve(self):
+        image_height = CLOUD.get_height()
+        self.screen.blit(CLOUD, (self.x_pos_nuve, self.y_pos_nuve))
+        self.screen.blit(CLOUD, (image_height + self.x_pos_nuve, self.y_pos_nuve))
+        if self.x_pos_nuve <= -image_height:
+            self.screen.blit(CLOUD, (image_height + self.x_pos_nuve, self.y_pos_nuve))
+            self.x_pos_nuve = 1000
+        self.x_pos_nuve -= self.game_speed
 
 
     def score(self):
@@ -90,8 +100,6 @@ class Game:
 
     def show_menu(self, death_count):
         self.running = True
-
-        # white_color = 
         self.screen.fill((255, 255, 255))
         self.print_menu_elements(self.death_count)
         pygame.display.update()
@@ -105,9 +113,24 @@ class Game:
         if death_count == 0:
             text, text_rect = text_utils.get_centered_message("Press any Key to Start")
             self.screen.blit(text, text_rect)
+      
+            text_rect_dino = text_utils.get_dino_elemen()
+            self.screen.blit(ICON  , text_rect_dino)
+
+
         elif death_count > 0:
             text, text_rect = text_utils.get_centered_message("Press any Key to Restart")
             score, score_rect = text_utils.get_centered_message("Your score was: " + str(self.points), height = half_screen_height + 50)
+
+            text_death , text_death_rect = text_utils.get_number_dead(self.death_count )
+            self.screen.blit(text_death, text_death_rect)
+
+            text_rect_dino = text_utils.get_dino_elemen()
+            self.screen.blit(ICON  , text_rect_dino)
+
+            text_game = text_utils.get_game_hover()
+            self.screen.blit(GAME  , text_game)
+
             self.screen.blit(text, text_rect)
             self.screen.blit(score, score_rect)
 
