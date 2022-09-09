@@ -10,6 +10,9 @@ class PowerUpManager:
         self.points = 0
         self.option_number = list(range(1,10)) 
 
+        self.soud = pygame.mixer.Sound("sound/poder.wav") #sonido
+
+
     def reset_power_ups(self, points):
         self.power_ups=[]   
         self.points = points
@@ -38,6 +41,9 @@ class PowerUpManager:
                 player.shield_time_up = power_up.start_time + (time_random * 1000)
                 self.power_ups.remove(power_up)
 
+                self.soud.play()#sonido
+                self.soud.set_volume(0.1)
+                
     def draw(self, screen):
         for power_up in self.power_ups:
             power_up.draw(screen)    

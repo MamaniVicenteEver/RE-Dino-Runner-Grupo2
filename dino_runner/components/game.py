@@ -32,8 +32,8 @@ class Game:
         self.player_heart_manager = PlayerHeartManager()
         self.power_up_manager = PowerUpManager()
 
-        pygame.mixer.music.load("MusicFondo.wav")
-        pygame.mixer.music.play(-1)
+        pygame.mixer.music.load("sound/MusicFondo.wav")
+        
 
  
     def run(self):
@@ -58,6 +58,7 @@ class Game:
         self.player.update(user_input)
         self.power_up_manager.update(self.points, self.game_speed, self.player)
         self.obstacle_manager.update(self)
+
 
     def draw(self):
         self.clock.tick(FPS)
@@ -96,7 +97,7 @@ class Game:
     def score(self):
         self.points += 1
         if self.points % 100 == 0:
-            self.game_speed += 5
+            self.game_speed += 1
         score, score_rect = text_utils.get_score_element(self.points)
         self.player.check_visibility(self.screen)
         self.screen.blit(score, score_rect)
@@ -107,6 +108,8 @@ class Game:
         self.print_menu_elements(self.death_count)
         pygame.display.update()
         self.handle_key_events_on_menu()
+        pygame.mixer.music.play(-1)#sonido
+        pygame.mixer.music.set_volume(0.2)
 
 
 
@@ -136,6 +139,7 @@ class Game:
 
             self.screen.blit(text, text_rect)
             self.screen.blit(score, score_rect)
+            
 
     def handle_key_events_on_menu(self):
         for event in pygame.event.get():
@@ -147,4 +151,5 @@ class Game:
                 exit()
 
             if event.type == pygame.KEYDOWN:
+                
                 self.run()

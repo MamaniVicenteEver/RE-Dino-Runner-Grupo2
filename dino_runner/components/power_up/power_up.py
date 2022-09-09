@@ -1,4 +1,5 @@
 import random
+import pygame
 
 from dino_runner.utils.constants import SCREEN_HEIGHT
 from  pygame.sprite import Sprite 
@@ -13,9 +14,11 @@ class PowerUp(Sprite):
         self.start_time=0
         self.width = self.image.get_width()
 
+
     def update(self, game_speed, powerups):
         self.rect.x -= game_speed
         if(self.rect.x <- self.rect.width):
+
             powerups.pop()
          
     def draw(self, screen):

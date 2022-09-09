@@ -7,6 +7,7 @@ class ObstacleManager:
 
     def __init__(self):
         self.obstacles = []
+        self.soud = pygame.mixer.Sound("sound/choque.wav") #sonido
 
     def update(self,game):
         if len(self.obstacles) ==0:
@@ -19,11 +20,16 @@ class ObstacleManager:
                 if not game.player.shield:
                   if not game.player.has_lives:
                     game.player_heart_manager.reduce_heart_count() #vidas descontando
+
+                    self.soud.play()#sonido
+                    self.soud.set_volume(0.1)
+
                     if game.player_heart_manager.heart_count > 0:
                        game.player.has_lives = True
                        self.obstacles.pop()
                        start_transition_time = pygame.time.get_ticks()
                        game.player.lives_transition_time = start_transition_time + 1000
+
                     else:
                         # pygame.time.delay(500)
                         game.playing = False 

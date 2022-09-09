@@ -9,7 +9,7 @@ class Dinosaur():
     Y_POS_DUCK = 340
     JUMP_VEL = 8.5
 
-    def __init__(self) -> None:
+    def __init__(self) :
         self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
         self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
         self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
@@ -31,7 +31,8 @@ class Dinosaur():
 
         self.setup_state_boolean()
 
-
+        
+        self.soud = pygame.mixer.Sound("sound/SaltoEfect.wav") #sonido
 
     def setup_state_boolean(self):
         self.has_powerup = False 
@@ -53,6 +54,8 @@ class Dinosaur():
             self.dino_duck = True
             self.dino_jump = False
         elif user_input[pygame.K_UP] and not self.dino_jump:
+            self.soud.play()#sonido
+            self.soud.set_volume(0.1)
             self.dino_run = False
             self.dino_duck = False
             self.dino_jump = True
